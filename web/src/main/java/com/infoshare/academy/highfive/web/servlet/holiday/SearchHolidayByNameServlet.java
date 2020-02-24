@@ -35,27 +35,27 @@ public class SearchHolidayByNameServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/html;charset=UTF-8");
 
-        PrintWriter writer = resp.getWriter();
-        HttpSession session = req.getSession();
-        Map<String, Object> dataModel = new HashMap<>();
+      PrintWriter writer = resp.getWriter();
+      HttpSession session = req.getSession();
+      Map<String, Object> dataModel = new HashMap<>();
 
-        Template template = this.templateProvider.getTemplate(getServletContext(), "template.ftlh");
+      Template template = this.templateProvider.getTemplate(getServletContext(), "template.ftlh");
 
-        dataModel.put("method", req.getMethod());
-        dataModel.put("contentTemplate", "holiday-search.ftlh");
-        dataModel.put("title", "Search result by name");
-        dataModel.put("pluginCssTemplate", "plugin-css-all-holiday.ftlh");
-        dataModel.put("pluginJsTemplate", "plugin-js-all-holiday.ftlh");
+      dataModel.put("method", req.getMethod());
+      dataModel.put("contentTemplate", "holiday-search.ftlh");
+      dataModel.put("title", "Search result by name");
+      dataModel.put("pluginCssTemplate", "plugin-css-stylesheet.ftlh");
+      dataModel.put("pluginJsTemplate", "plugin-js-servlets.ftlh");
 
-        dataModel.put("loggedEmployee", session.getAttribute("loggedEmployee") );
-        dataModel.put("loggedEmployeeRole",session.getAttribute("loggedEmployeeRole") );
+      dataModel.put("loggedEmployee", session.getAttribute("loggedEmployee"));
+      dataModel.put("loggedEmployeeRole", session.getAttribute("loggedEmployeeRole"));
 
-        try {
-            template.process(dataModel, writer);
-        } catch (
-                TemplateException e) {
-            LOGGER.warn("Issue with processing Freemarker template.{}", e.getMessage());
-        }
+      try {
+        template.process(dataModel, writer);
+      } catch (
+        TemplateException e) {
+        LOGGER.warn("Issue with processing Freemarker template.{}", e.getMessage());
+      }
 
     }
 
